@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NewsInstance } from "../../models/News.ts";
-import axios from "axios";
+import { getAllNews } from "../../http/API.ts";
 
 interface IInitialState {
   news: NewsInstance[];
@@ -36,12 +36,8 @@ const newsSlice = createSlice({
 });
 
 export const fetchNews = createAsyncThunk("getNews", async (_, thinkAPI) => {
-  try {
-    const response = await axios.get<NewsInstance[]>("https://api.hnpwa.com/v0/newest/1.json");
-    return response.data;
-  } catch (error) {
-    return thinkAPI.rejectWithValue("Something went wrong");
-  }
+  const countToFetch = 100;
+  return getAllNews(countToFetch, thinkAPI);
 });
 
 export default newsSlice.reducer;
