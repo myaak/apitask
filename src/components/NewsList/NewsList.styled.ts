@@ -8,3 +8,9 @@ export const NewsListWrapper = styled.ul`
   flex-direction: column;
   gap: 20px;
 `;
+
+export const NewsListLoaderWrapper = styled(NewsListWrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -2,6 +2,8 @@ import {
   CommentItemAuthor,
   CommentItemButtonsWrapper,
   CommentItemContent,
+  CommentItemMainInfo,
+  CommentItemPublishDate,
   CommentItemRepliesCount,
   CommentItemReply,
   CommentItemWrapper
@@ -9,37 +11,22 @@ import {
 import { NewsItemInstance } from "../../models/NewsItem.ts";
 import DOMPurify from "dompurify";
 import React, { useState } from "react";
-import axios from "axios";
 import Loader from "../Loader/Loader.tsx";
 import CommentItemTextarea from "./CommentItemTextarea.tsx";
+import { getCorrectTime } from "../../utils/getCorrectTime.ts";
+import useOpenReplies from "../../hooks/useOpenReplies.tsx";
 
 interface CommentItemProps {
   comment: NewsItemInstance;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
-  const { id, user, content, deleted, comments_count } = comment;
-
-  const [children, setChildren] = useState<NewsItemInstance[]>();
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [openedReplies, setOpenedReplies] = useState<boolean>(false);
+  const { id, user, content, deleted, comments_count, time } = comment;
   const [isReplying, setReplying] = useState<boolean>(false);
 
-  const safeContent = DOMPurify.sanitize(content); //API вернет HTML string, так что нужно проверить чтобы все безопасно было
+  const { openedReplies, isLoading, handleOpenReplies, children } = useOpenReplies(id);
 
-  const handleOpenReplies = async () => {
-    try {
-      if (!openedReplies && !children) {
-        setLoading(true);
-        const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
-        setChildren(response.data.comments);
-        setLoading(false);
-      }
-      setOpenedReplies((prev) => !prev);
-    } catch (e) {
-      setLoading(false);
-    }
-  };
+  const safeContent = DOMPurify.sanitize(content); //API вернет HTML string, так что нужно проверить чтобы все безопасно было
 
   const handleClickReply = () => {
     setReplying(true);
@@ -48,22 +35,25 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   return (
     !deleted && (
       <CommentItemWrapper>
-        <CommentItemAuthor>{user}</CommentItemAuthor>
-        <CommentItemContent dangerouslySetInnerHTML={{ __html: safeContent }}></CommentItemContent>
-        <CommentItemButtonsWrapper>
-          {comments_count > 0 ? (
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            <CommentItemRepliesCount onClick={() => handleOpenReplies()}>
-              {openedReplies ? "> " : "v "}
-              Replies: {comments_count}
-            </CommentItemRepliesCount>
-          ) : (
-            <CommentItemRepliesCount>No replies</CommentItemRepliesCount>
-          )}
-          <CommentItemReply onClick={handleClickReply}>Reply</CommentItemReply>
-        </CommentItemButtonsWrapper>
-        {isReplying && <CommentItemTextarea onCancel={() => setReplying(false)} />}
-        {isLoading && <Loader />}
+        <CommentItemMainInfo>
+          <CommentItemAuthor>{user}</CommentItemAuthor>
+          <CommentItemContent dangerouslySetInnerHTML={{ __html: safeContent }}></CommentItemContent>
+          <CommentItemButtonsWrapper>
+            {comments_count > 0 ? (
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              <CommentItemRepliesCount onClick={() => handleOpenReplies()}>
+                {openedReplies ? "> " : "v "}
+                Replies: {comments_count}
+              </CommentItemRepliesCount>
+            ) : (
+              <CommentItemRepliesCount>No replies</CommentItemRepliesCount>
+            )}
+            <CommentItemReply onClick={handleClickReply}>Reply</CommentItemReply>
+            <CommentItemPublishDate>{getCorrectTime(time)}</CommentItemPublishDate>
+          </CommentItemButtonsWrapper>
+          {isReplying && <CommentItemTextarea onCancel={() => setReplying(false)} />}
+          {isLoading && <Loader />}
+        </CommentItemMainInfo>
         {children &&
           openedReplies &&
           children.map((item: NewsItemInstance) => <CommentItem key={item.id} comment={item} />)}

@@ -1,5 +1,5 @@
 import NewsList from "../../components/NewsList/NewsList.tsx";
-import { useAppDispatch } from "../../app/reduxHooks.ts";
+import { useAppDispatch } from "../../hooks/reduxHooks.ts";
 import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 import { ReloadButton } from "./NewsListScreen.styled.ts";
 

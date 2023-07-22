@@ -1,15 +1,14 @@
 import Header from "../Header/Header.tsx";
 import AppRouter from "../AppRouter/AppRouter.tsx";
+import { Main } from "./AppWrapper.styled.ts";
 
 const AppWrapper = () => {
   return (
     <>
-      <header>
-        <Header />
-      </header>
-      <main>
+      <Header />
+      <Main>
         <AppRouter />
-      </main>
+      </Main>
     </>
   );
 };

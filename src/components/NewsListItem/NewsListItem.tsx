@@ -10,7 +10,7 @@ import {
   NewsItemWrapper
 } from "./NewsListItem.styled.ts";
 import { NewsInstance } from "../../models/News.ts";
-import { getTimeSincePostPublication } from "../../utils/getCorrectTime.ts";
+import { getCorrectTime } from "../../utils/getCorrectTime.ts";
 
 const NewsListItem: React.FC<NewsInstance> = ({ id, title, user, comments_count, points, time }) => {
   return (
@@ -26,7 +26,7 @@ const NewsListItem: React.FC<NewsInstance> = ({ id, title, user, comments_count,
         <NewsItemComments>Comments: {comments_count}</NewsItemComments>
         <NewsItemRating>Points: {points}</NewsItemRating>
       </NewsItemInfo>
-      <NewsItemPublishDate>Published: {getTimeSincePostPublication(time)}</NewsItemPublishDate>
+      <NewsItemPublishDate>Published: {getCorrectTime(time)}</NewsItemPublishDate>
     </NewsItemWrapper>
   );
 };

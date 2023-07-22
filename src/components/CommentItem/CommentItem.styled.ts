@@ -8,7 +8,12 @@ export const CommentItemWrapper = styled.div`
   border-bottom: 2px solid #444;
   border-radius: 8px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
+
+export const CommentItemMainInfo = styled.div``;
 
 export const CommentItemAuthor = styled.div<ITheme>`
   font-weight: bold;
@@ -25,7 +30,6 @@ export const CommentItemButtonsWrapper = styled.div`
   gap: 15px;
   user-select: none;
   margin-top: 5px;
-  margin-bottom: 10px;
   font-size: 13px;
 `;
 
@@ -73,3 +77,13 @@ export const CommentItemReplyButton = styled.button`
 `;
 
 export const CommentItemCancelButton = CommentItemReplyButton;
+export const CommentItemPublishDate = styled(CommentItemReply)`
+  position: absolute;
+  right: 20px;
+  user-select: text;
+
+  &:hover {
+    text-decoration: none;
+    cursor: auto;
+  }
+`;

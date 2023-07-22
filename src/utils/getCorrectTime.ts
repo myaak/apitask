@@ -1,4 +1,4 @@
-export function getTimeSincePostPublication(timestamp: number) {
+export function getCorrectTime(timestamp: number) {
   const now = new Date();
   const timeDifference = Number(now) - timestamp * 1000; // milliseconds
 

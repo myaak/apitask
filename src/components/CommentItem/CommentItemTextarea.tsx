@@ -31,13 +31,13 @@ const CommentItemTextarea: React.FC<CommentItemTextareaProps> = ({ onCancel }) =
     <>
       <CommentItemReplyTextarea
         ref={textareaRef}
-        placeholder={"Write your reply here..."}
+        placeholder={"Write your comment here..."}
         value={replyMessage}
         onChange={handleTextareaChange}
         onInput={resizeTextarea}
       ></CommentItemReplyTextarea>
       <CommentItemReplyButtonsWrapper>
-        <CommentItemReplyButton>Send reply</CommentItemReplyButton>
+        <CommentItemReplyButton>Send</CommentItemReplyButton>
         <CommentItemCancelButton onClick={onCancel}>Cancel</CommentItemCancelButton>
       </CommentItemReplyButtonsWrapper>
     </>

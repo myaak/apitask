@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ITheme } from "../../theme/theme.ts";
+import { CommentItemReply, CommentItemReplyButton } from "../CommentItem/CommentItem.styled.ts";
 
 export const NewsDetailedItemWrapper = styled.div`
   max-width: 800px;
@@ -8,6 +9,10 @@ export const NewsDetailedItemWrapper = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+
+  @media (min-width: 799px) {
+    width: auto;
+  }
 `;
 
 export const NewsDetailedItemTitle = styled.h1<ITheme>`
@@ -35,7 +40,6 @@ export const NewsDetailedItemContent = styled.div<ITheme>`
 `;
 
 export const NewsDetailedItemTopic = styled.a<ITheme>`
-  margin-left: 5px;
   color: ${(props) => props.theme.textColor};
   text-decoration: none;
 
@@ -54,3 +58,14 @@ export const NewsDetailedItemError = styled(NewsDetailedItemLoading)`
   font-weight: 700;
   font-size: 24px;
 `;
+
+export const NewsDetailedItemGoBack = styled(CommentItemReply)`
+  position: absolute;
+  left: 2rem;
+  top: 0;
+  user-select: none;
+`;
+
+export const NewsDetailedItemLeaveCommentButton = CommentItemReplyButton;
+
+export const NewsDetailedItemUserContent = NewsDetailedItemContent;

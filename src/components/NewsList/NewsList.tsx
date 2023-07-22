@@ -1,10 +1,11 @@
-import { NewsListWrapper } from "./NewsList.styled.ts";
+import { NewsListLoaderWrapper, NewsListWrapper } from "./NewsList.styled.ts";
 import { useCallback, useEffect } from "react";
 import NewsListItem from "../NewsListItem/NewsListItem.tsx";
-import { useAppDispatch, useAppSelector } from "../../app/reduxHooks.ts";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
 import { NewsInstance } from "../../models/News.ts";
 import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 import Loader from "../Loader/Loader.tsx";
+import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
 
 export const NewsList = () => {
   const { news, isLoading, error } = useAppSelector((state) => state.newsList);
@@ -27,16 +28,11 @@ export const NewsList = () => {
 
   const fetchNewNews = useCallback(async () => {
     await dispatch(fetchNews());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     void fetchNewNews();
-    const intervalId = setInterval(fetchNewNews, 60 * 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [fetchNewNews]);
+  }, []);
 
   if (error) {
     return <NewsListWrapper>{error}</NewsListWrapper>;
@@ -44,13 +40,18 @@ export const NewsList = () => {
 
   if (isLoading) {
     return (
-      <NewsListWrapper>
+      <NewsListLoaderWrapper>
         <Loader />
-      </NewsListWrapper>
+      </NewsListLoaderWrapper>
     );
   }
 
-  return <NewsListWrapper>{newsItems}</NewsListWrapper>;
+  return (
+    <NewsListWrapper>
+      <FetchAlertWindow callback={fetchNewNews} />
+      {newsItems}
+    </NewsListWrapper>
+  );
 };
 
 export default NewsList;

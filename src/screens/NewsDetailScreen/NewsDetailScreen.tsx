@@ -1,34 +1,24 @@
-import { useEffect, useState } from "react";
-import { NewsItemInstance } from "../../models/NewsItem.ts";
-import axios from "axios";
+import { useEffect } from "react";
 import Loader from "../../components/Loader/Loader.tsx";
 import NewsDetailedItem from "../../components/NewsDetailedItem/NewsDetailedItem.tsx";
 import {
   NewsDetailedItemError,
   NewsDetailedItemLoading
 } from "../../components/NewsDetailedItem/NewsDetailedItem.styled.ts";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
+import { fetchNewsItemDetails } from "../../store/Reducers/NewsItemReducer.ts";
 
 const NewsDetailScreen = () => {
-  const [newsDetails, setNewsDetails] = useState<NewsItemInstance>();
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const { newsDetailsItem, isLoading, error } = useAppSelector((state) => state.newsItem);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const itemId = Number(window.location.pathname.slice(1));
-
-    const getNewsDetails = async (id: number) => {
-      try {
-        setLoading(true);
-        const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
-        setNewsDetails(response.data);
-        setLoading(false);
-      } catch (e) {
-        setLoading(false);
-        setError(true);
-      }
-    };
-    void getNewsDetails(itemId);
+    dispatch(fetchNewsItemDetails(itemId));
   }, []);
+
+  useEffect(() => {});
 
   if (isLoading) {
     return (
@@ -42,7 +32,7 @@ const NewsDetailScreen = () => {
     return <NewsDetailedItemError>Something went wrong</NewsDetailedItemError>;
   }
 
-  return newsDetails?.id && <NewsDetailedItem newsDetailedItem={newsDetails} />;
+  return newsDetailsItem && <NewsDetailedItem />;
 };
 
 export default NewsDetailScreen;
