@@ -3,9 +3,9 @@ import { useCallback, useEffect } from "react";
 import NewsListItem from "../NewsListItem/NewsListItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
 import { NewsInstance } from "../../models/News.ts";
-import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 import Loader from "../Loader/Loader.tsx";
 import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
+import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 
 export const NewsList = () => {
   const { news, isLoading, error } = useAppSelector((state) => state.newsList);
@@ -27,7 +27,7 @@ export const NewsList = () => {
   ));
 
   const fetchNewNews = useCallback(async () => {
-    await dispatch(fetchNews());
+    dispatch(fetchNews());
   }, []);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ export const NewsList = () => {
     );
   }
 
+  // Не знаю, FetchAlertWindow два раза рендерится а NewsListWrapper один. Без понятия че делать
   return (
     <NewsListWrapper>
       <FetchAlertWindow callback={fetchNewNews} />

@@ -9,3 +9,5 @@ const FetchAlertWindow: React.FC<{ callback: Function }> = ({ callback }) => {
 };
 
 export default React.memo(FetchAlertWindow);
+
+// TODO: понять почему эта штука рендерится два раза

@@ -2,9 +2,9 @@ import { CommentListTitle, CommentListWrapper } from "./CommentList.styled.ts";
 import { NewsItemInstance } from "../../models/NewsItem.ts";
 import CommentItem from "../CommentItem/CommentItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
+import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
 import { useCallback } from "react";
 import { fetchNewsItemComments } from "../../store/Reducers/NewsItemReducer.ts";
-import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
 
 const CommentList = () => {
   const { comments } = useAppSelector((state) => state.newsItem.newsDetailsItem);
