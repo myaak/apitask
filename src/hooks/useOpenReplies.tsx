@@ -1,18 +1,27 @@
 import { useState } from "react";
-import axios from "axios";
 import { NewsItemInstance } from "../models/NewsItem.ts";
+import { getSingleItem } from "../http/API.ts";
 
 const useOpenReplies = (id: number) => {
   const [children, setChildren] = useState<NewsItemInstance[]>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [openedReplies, setOpenedReplies] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const handleOpenReplies = async () => {
     try {
+      if (error) {
+        setError(false);
+      }
+
       if (!openedReplies && !children) {
         setLoading(true);
-        const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
-        setChildren(response.data.comments);
+        const newsItem = await getSingleItem(id);
+        if (!(newsItem instanceof Error)) {
+          setChildren(newsItem.comments);
+        } else {
+          setError(true);
+        }
         setLoading(false);
       }
       setOpenedReplies((prev) => !prev);
@@ -21,7 +30,7 @@ const useOpenReplies = (id: number) => {
     }
   };
 
-  return { openedReplies, isLoading, handleOpenReplies, children };
+  return { openedReplies, isLoading, handleOpenReplies, children, error };
 };
 
 export default useOpenReplies;

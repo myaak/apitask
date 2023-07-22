@@ -1,6 +1,8 @@
 import axios from "axios";
 import { NewsInstance } from "../models/News.ts";
+import { NewsItemInstance } from "../models/NewsItem.ts";
 
+//get news via redux asyncThunk
 export const getAllNews = async (countToFetch: number, thinkAPI: any) => {
   const pageSize = 30;
   const totalPages = Math.ceil(countToFetch / pageSize);
@@ -25,4 +27,13 @@ export const getAllNews = async (countToFetch: number, thinkAPI: any) => {
   }
 
   return allNews;
+};
+
+export const getSingleItem = async (id: number) => {
+  try {
+    const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    return response.data;
+  } catch (e) {
+    return new Error();
+  }
 };

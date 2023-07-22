@@ -24,7 +24,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   const { id, user, content, deleted, comments_count, time } = comment;
   const [isReplying, setReplying] = useState<boolean>(false);
 
-  const { openedReplies, isLoading, handleOpenReplies, children } = useOpenReplies(id);
+  const { openedReplies, isLoading, handleOpenReplies, children, error } = useOpenReplies(id);
 
   const safeContent = DOMPurify.sanitize(content); //API вернет HTML string, так что нужно проверить чтобы все безопасно было
 
@@ -54,6 +54,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
           {isReplying && <CommentItemTextarea onCancel={() => setReplying(false)} />}
           {isLoading && <Loader />}
         </CommentItemMainInfo>
+        {error && <CommentItemWrapper>Something went wrong</CommentItemWrapper>}
         {children &&
           openedReplies &&
           children.map((item: NewsItemInstance) => <CommentItem key={item.id} comment={item} />)}
