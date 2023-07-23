@@ -4,8 +4,9 @@ import NewsListItem from "../NewsListItem/NewsListItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
 import { NewsInstance } from "../../models/News.ts";
 import Loader from "../Loader/Loader.tsx";
-import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
 import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
+import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
+import { ReloadButton } from "../../screens/NewsListScreen/NewsListScreen.styled.ts";
 
 export const NewsList = () => {
   const { news, isLoading, error } = useAppSelector((state) => state.newsList);
@@ -38,7 +39,7 @@ export const NewsList = () => {
     return <NewsListWrapper>{error}</NewsListWrapper>;
   }
 
-  if (isLoading) {
+  if (isLoading || !news.length) {
     return (
       <NewsListLoaderWrapper>
         <Loader />
@@ -46,11 +47,13 @@ export const NewsList = () => {
     );
   }
 
-  // Не знаю, FetchAlertWindow два раза рендерится а NewsListWrapper один. Без понятия че делать
   return (
     <NewsListWrapper>
       <FetchAlertWindow callback={fetchNewNews} />
       {newsItems}
+      <>
+        <ReloadButton onClick={fetchNewNews}>Reload news</ReloadButton>
+      </>
     </NewsListWrapper>
   );
 };

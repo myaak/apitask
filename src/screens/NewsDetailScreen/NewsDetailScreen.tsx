@@ -1,38 +1,24 @@
 import { useEffect } from "react";
-import Loader from "../../components/Loader/Loader.tsx";
 import NewsDetailedItem from "../../components/NewsDetailedItem/NewsDetailedItem.tsx";
-import {
-  NewsDetailedItemError,
-  NewsDetailedItemLoading
-} from "../../components/NewsDetailedItem/NewsDetailedItem.styled.ts";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
 import { fetchNewsItemDetails } from "../../store/Reducers/NewsItemReducer.ts";
+import { useParams } from "react-router-dom";
 
 const NewsDetailScreen = () => {
-  const { newsDetailsItem, isLoading, error } = useAppSelector((state) => state.newsItem);
+  const { newsDetailsItem } = useAppSelector((state) => state.newsItem);
+
+  const { topicId } = useParams();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const itemId = Number(window.location.pathname.slice(1));
-    dispatch(fetchNewsItemDetails(itemId));
+    dispatch(fetchNewsItemDetails(Number(topicId)));
   }, []);
 
   useEffect(() => {});
 
-  if (isLoading) {
-    return (
-      <NewsDetailedItemLoading>
-        <Loader />
-      </NewsDetailedItemLoading>
-    );
-  }
-
-  if (error) {
-    return <NewsDetailedItemError>Something went wrong</NewsDetailedItemError>;
-  }
-
-  return newsDetailsItem && <NewsDetailedItem />;
+  return !newsDetailsItem.dead ? <NewsDetailedItem /> : null;
+  // тут условие. dead по умолчанию true, потому что рендерится с initialState, а после фетча уже с нормальным. Чтобы избежать два ререндера
 };
 
 export default NewsDetailScreen;
