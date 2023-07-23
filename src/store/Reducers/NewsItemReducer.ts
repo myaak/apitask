@@ -17,8 +17,8 @@ const initialState: IInitialState = {
     user: "",
     time: 0,
     content: "",
-    deleted: false,
-    dead: false,
+    deleted: true,
+    dead: true,
     type: "",
     url: "",
     domain: "",
@@ -58,9 +58,12 @@ const newsItemSlice = createSlice({
   }
 });
 
+// Ниже две одинаковые функции но не знаю как лучше назвать/сделать. Что комментарий, что ньюс айтем по одному принципу достаются
+
 export const fetchNewsItemDetails = createAsyncThunk("getNewsItemDetails", async (id: number, thinkAPI) => {
   try {
     const response = await axios.get<NewsInstance[]>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    if (!(typeof response.data === "object")) return thinkAPI.rejectWithValue("Something went wrong");
     return response.data;
   } catch (error) {
     return thinkAPI.rejectWithValue("Something went wrong");
@@ -70,6 +73,7 @@ export const fetchNewsItemDetails = createAsyncThunk("getNewsItemDetails", async
 export const fetchNewsItemComments = createAsyncThunk("getNewsItemComments", async (id: number, thinkAPI) => {
   try {
     const response = await axios.get<NewsInstance[]>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    if (!(typeof response.data === "object")) return thinkAPI.rejectWithValue("Something went wrong");
     return response.data;
   } catch (error) {
     return thinkAPI.rejectWithValue("Something went wrong");
