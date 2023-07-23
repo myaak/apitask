@@ -10,12 +10,14 @@ import { NewsDetailedItemCommentsReloadButton } from "../NewsDetailedItem/NewsDe
 const CommentList = () => {
   const { id, comments } = useAppSelector((state) => state.newsItem.newsDetailsItem);
 
+  const { isCommentsLoading } = useAppSelector((state) => state.newsItem);
+
   const dispatch = useAppDispatch();
 
   const commentsList = comments.map((item: NewsItemInstance) => <CommentItem key={item.id} comment={item} />);
 
   const fetchNewComments = useCallback(async () => {
-    await dispatch(fetchNewsItemComments(id));
+    dispatch(fetchNewsItemComments(id));
   }, []);
 
   return (
@@ -23,7 +25,7 @@ const CommentList = () => {
       <NewsDetailedItemCommentsReloadButton onClick={fetchNewComments}>
         Reload comments
       </NewsDetailedItemCommentsReloadButton>
-      <FetchAlertWindow callback={fetchNewComments} />
+      {!isCommentsLoading && <FetchAlertWindow callback={fetchNewComments} />}
       <CommentListTitle>{commentsList.length ? "Comments" : "No comments yet"}</CommentListTitle>
       {commentsList}
     </CommentListWrapper>

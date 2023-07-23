@@ -4,12 +4,14 @@ import { getAllNews } from "../../http/API.ts";
 
 interface IInitialState {
   news: NewsInstance[];
+  isFetched: boolean;
   isLoading: boolean;
   error: string;
 }
 
 const initialState: IInitialState = {
   news: [],
+  isFetched: false,
   isLoading: false,
   error: ""
 };
@@ -21,6 +23,7 @@ const newsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchNews.fulfilled.type, (state, action: PayloadAction<NewsInstance[]>) => {
       state.news = action.payload;
+      state.isFetched = true;
       state.isLoading = false;
       state.error = "";
     });

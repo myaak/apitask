@@ -1,4 +1,4 @@
-import { NewsListLoaderWrapper, NewsListWrapper } from "./NewsList.styled.ts";
+import { NewsListLoaderWrapper, NewsListWrapper, ReloadButton } from "./NewsList.styled.ts";
 import { useCallback, useEffect } from "react";
 import NewsListItem from "../NewsListItem/NewsListItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
@@ -6,10 +6,9 @@ import { NewsInstance } from "../../models/News.ts";
 import Loader from "../Loader/Loader.tsx";
 import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 import FetchAlertWindow from "../FetchAlertWindow/FetchAlertWindow.tsx";
-import { ReloadButton } from "../../screens/NewsListScreen/NewsListScreen.styled.ts";
 
 export const NewsList = () => {
-  const { news, isLoading, error } = useAppSelector((state) => state.newsList);
+  const { news, isLoading, error, isFetched } = useAppSelector((state) => state.newsList);
 
   const dispatch = useAppDispatch();
 
@@ -39,7 +38,7 @@ export const NewsList = () => {
     return <NewsListWrapper>{error}</NewsListWrapper>;
   }
 
-  if (isLoading || !news.length) {
+  if (isLoading || !isFetched) {
     return (
       <NewsListLoaderWrapper>
         <Loader />
@@ -48,13 +47,13 @@ export const NewsList = () => {
   }
 
   return (
-    <NewsListWrapper>
-      <FetchAlertWindow callback={fetchNewNews} />
-      {newsItems}
-      <>
-        <ReloadButton onClick={fetchNewNews}>Reload news</ReloadButton>
-      </>
-    </NewsListWrapper>
+    <>
+      <NewsListWrapper>
+        <FetchAlertWindow callback={fetchNewNews} />
+        {newsItems}
+      </NewsListWrapper>
+      <ReloadButton onClick={fetchNewNews}>Reload news</ReloadButton>
+    </>
   );
 };
 

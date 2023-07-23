@@ -33,12 +33,18 @@ export const CommentItemButtonsWrapper = styled.div`
   font-size: 13px;
 `;
 
-export const CommentItemRepliesCount = styled.p<ITheme>`
+export const CommentItemRepliesCount = styled.button<ITheme>`
   color: ${(props) => props.theme.textColor};
+  background: none;
+  border: none;
 
   &:hover {
     cursor: pointer;
     text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 

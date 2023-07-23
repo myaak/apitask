@@ -1,6 +1,5 @@
 import {
   NewsDetailedItemAuthor,
-  NewsDetailedItemCommentsReloadButton,
   NewsDetailedItemContent,
   NewsDetailedItemDate,
   NewsDetailedItemError,

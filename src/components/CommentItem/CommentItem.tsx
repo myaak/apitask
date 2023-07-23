@@ -15,6 +15,7 @@ import Loader from "../Loader/Loader.tsx";
 import CommentItemTextarea from "./CommentItemTextarea.tsx";
 import { getCorrectTime } from "../../utils/getCorrectTime.ts";
 import useOpenReplies from "../../hooks/useOpenReplies.tsx";
+import { useAppSelector } from "../../hooks/reduxHooks.ts";
 
 interface CommentItemProps {
   comment: NewsItemInstance;
@@ -23,6 +24,8 @@ interface CommentItemProps {
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   const { id, user, content, deleted, comments_count, time } = comment;
   const [isReplying, setReplying] = useState<boolean>(false);
+
+  const { isCommentsLoading } = useAppSelector((state) => state.newsItem);
 
   const { openedReplies, isLoading, handleOpenReplies, children, error } = useOpenReplies(id);
 
@@ -40,8 +43,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
           <CommentItemContent dangerouslySetInnerHTML={{ __html: safeContent }}></CommentItemContent>
           <CommentItemButtonsWrapper>
             {comments_count > 0 ? (
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              <CommentItemRepliesCount onClick={() => handleOpenReplies()}>
+              <CommentItemRepliesCount disabled={isCommentsLoading} onClick={() => void handleOpenReplies()}>
                 {openedReplies ? "> " : "v "}
                 Replies: {comments_count}
               </CommentItemRepliesCount>

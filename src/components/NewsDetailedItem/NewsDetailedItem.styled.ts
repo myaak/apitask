@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ITheme } from "../../theme/theme.ts";
 import { CommentItemReply, CommentItemReplyButton } from "../CommentItem/CommentItem.styled.ts";
-import { ReloadButton } from "../../screens/NewsListScreen/NewsListScreen.styled.ts";
+import { ReloadButton } from "../NewsList/NewsList.styled.ts";
 
 export const NewsDetailedItemWrapper = styled.div`
   max-width: 800px;
