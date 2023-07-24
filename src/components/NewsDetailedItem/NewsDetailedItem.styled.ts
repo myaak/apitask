@@ -4,11 +4,11 @@ import { CommentItemReply, CommentItemReplyButton } from "../CommentItem/Comment
 import { ReloadButton } from "../NewsList/NewsList.styled.ts";
 
 export const NewsDetailedItemWrapper = styled.div`
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 
   @media (min-width: 799px) {
@@ -24,13 +24,11 @@ export const NewsDetailedItemTitle = styled.h1<ITheme>`
 
 export const NewsDetailedItemAuthor = styled.p<ITheme>`
   color: ${(props) => props.theme.textColor};
-  margin: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 `;
 export const NewsDetailedItemDate = styled.div<ITheme>`
   font-size: 16px;
-  margin: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
   color: ${(props) => props.theme.textColor};
 `;
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ITheme } from "../../theme/theme.ts";
 
 export const NewsListWrapper = styled.ul`
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   display: flex;

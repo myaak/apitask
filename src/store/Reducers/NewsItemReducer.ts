@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewsInstance } from "../../models/News.ts";
-import axios from "axios";
-import { NewsItemInstance } from "../../models/NewsItem.ts";
+import { NewsItemInstance } from "../../types/NewsItem.ts";
+import { getSingleItem } from "../../http/API.ts";
 
 interface IInitialState {
   newsDetailsItem: NewsItemInstance;
@@ -73,21 +72,19 @@ const newsItemSlice = createSlice({
 // Ниже две одинаковые функции но не знаю как лучше назвать/сделать. Что комментарий, что ньюс айтем по одному принципу достаются
 
 export const fetchNewsItemDetails = createAsyncThunk("getNewsItemDetails", async (id: number, thinkAPI) => {
-  try {
-    const response = await axios.get<NewsInstance[]>(`https://api.hnpwa.com/v0/item/${id}.json`);
-    if (!(typeof response.data === "object")) return thinkAPI.rejectWithValue("Something went wrong");
-    return response.data;
-  } catch (error) {
+  const response = await getSingleItem(id);
+  if (typeof response === "object" && !(response instanceof Error)) {
+    return response;
+  } else {
     return thinkAPI.rejectWithValue("Something went wrong");
   }
 });
 
 export const fetchNewsItemComments = createAsyncThunk("getNewsItemComments", async (id: number, thinkAPI) => {
-  try {
-    const response = await axios.get<NewsInstance[]>(`https://api.hnpwa.com/v0/item/${id}.json`);
-    if (!(typeof response.data === "object")) return thinkAPI.rejectWithValue("Something went wrong");
-    return response.data;
-  } catch (error) {
+  const response = await getSingleItem(id);
+  if (typeof response === "object" && !(response instanceof Error)) {
+    return response;
+  } else {
     return thinkAPI.rejectWithValue("Something went wrong");
   }
 });

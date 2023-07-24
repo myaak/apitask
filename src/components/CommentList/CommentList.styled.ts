@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { ITheme } from "../../theme/theme.ts";
 
 export const CommentListWrapper = styled.ul`
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 1200px;
   padding: 10px 0;
   display: flex;
   flex-direction: column;

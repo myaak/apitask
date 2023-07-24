@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NewsItemInstance } from "../models/NewsItem.ts";
+import { NewsItemInstance } from "../types/NewsItem.ts";
 import { getSingleItem } from "../http/API.ts";
 
 const useOpenReplies = (id: number) => {

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewsInstance } from "../../models/News.ts";
+import { NewsInstance } from "../../types/News.ts";
 import { getAllNews } from "../../http/API.ts";
 
 interface IInitialState {

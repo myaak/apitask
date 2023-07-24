@@ -8,7 +8,7 @@ import {
   CommentItemReply,
   CommentItemWrapper
 } from "./CommentItem.styled.ts";
-import { NewsItemInstance } from "../../models/NewsItem.ts";
+import { NewsItemInstance } from "../../types/NewsItem.ts";
 import DOMPurify from "dompurify";
 import React, { useState } from "react";
 import Loader from "../Loader/Loader.tsx";
@@ -45,10 +45,10 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
             {comments_count > 0 ? (
               <CommentItemRepliesCount disabled={isCommentsLoading} onClick={() => void handleOpenReplies()}>
                 {openedReplies ? "> " : "v "}
-                Replies: {comments_count}
+                Comments: {comments_count}
               </CommentItemRepliesCount>
             ) : (
-              <CommentItemRepliesCount>No replies</CommentItemRepliesCount>
+              <CommentItemRepliesCount>No comments yet</CommentItemRepliesCount>
             )}
             <CommentItemReply onClick={handleClickReply}>Reply</CommentItemReply>
             <CommentItemPublishDate>{getCorrectTime(time)}</CommentItemPublishDate>

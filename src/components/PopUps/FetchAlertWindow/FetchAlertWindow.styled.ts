@@ -14,8 +14,7 @@ export const FetchAlertWindowStyled = styled.div`
   padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  animation-name: slideUp;
-  animation-duration: 1s;
+  animation: slideUp 1s;
 
   @keyframes slideUp {
     from {

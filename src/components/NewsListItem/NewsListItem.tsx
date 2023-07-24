@@ -9,7 +9,7 @@ import {
   NewsItemTitle,
   NewsItemWrapper
 } from "./NewsListItem.styled.ts";
-import { NewsInstance } from "../../models/News.ts";
+import { NewsInstance } from "../../types/News.ts";
 import { getCorrectTime } from "../../utils/getCorrectTime.ts";
 
 const NewsListItem: React.FC<NewsInstance> = ({ id, title, user, comments_count, points, time }) => {

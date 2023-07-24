@@ -1,6 +1,6 @@
 import axios from "axios";
-import { NewsInstance } from "../models/News.ts";
-import { NewsItemInstance } from "../models/NewsItem.ts";
+import { NewsInstance } from "../types/News.ts";
+import { NewsItemInstance } from "../types/NewsItem.ts";
 
 //get news via redux asyncThunk
 export const getAllNews = async (countToFetch: number, thinkAPI: any) => {
