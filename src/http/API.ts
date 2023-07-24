@@ -3,7 +3,7 @@ import { NewsInstance } from "../types/News.ts";
 import { NewsItemInstance } from "../types/NewsItem.ts";
 
 //get news via redux asyncThunk
-export const getAllNews = async (countToFetch: number, thinkAPI: any) => {
+export const getAllNews = async (countToFetch: number, thinkAPI?: any) => {
   const pageSize = 30;
   const totalPages = Math.ceil(countToFetch / pageSize);
 

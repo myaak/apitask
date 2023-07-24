@@ -1,4 +1,4 @@
-import { NewsListLoaderWrapper, NewsListWrapper, ReloadButton } from "./NewsList.styled.ts";
+import { NewsListErrorWrapper, NewsListLoaderWrapper, NewsListWrapper, ReloadButton } from "./NewsList.styled.ts";
 import { useCallback, useEffect, useState } from "react";
 import NewsListItem from "../NewsListItem/NewsListItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
@@ -43,7 +43,7 @@ export const NewsList = () => {
   }, [fetchNewNews]);
 
   if (error) {
-    return <NewsListWrapper>{error}</NewsListWrapper>;
+    return <NewsListErrorWrapper>{error}</NewsListErrorWrapper>;
   }
 
   if (isLoading || !isFetched) {

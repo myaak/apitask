@@ -15,6 +15,12 @@ export const NewsListLoaderWrapper = styled(NewsListWrapper)`
   justify-content: center;
   align-items: center;
 `;
+
+export const NewsListErrorWrapper = styled(NewsListWrapper)`
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+`;
 export const ReloadButton = styled.button<ITheme>`
   position: fixed;
   right: 2rem;
