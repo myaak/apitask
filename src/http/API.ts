@@ -3,7 +3,7 @@ import { NewsInstance } from "../types/News.ts";
 import { NewsItemInstance } from "../types/NewsItem.ts";
 
 //get news via redux asyncThunk
-export const getAllNews = async (countToFetch: number, thinkAPI?: any) => {
+export const getAllNews = async (countToFetch: number, thinkAPI?: any): Promise<NewsInstance[]> => {
   const pageSize = 30;
   const totalPages = Math.ceil(countToFetch / pageSize);
 
@@ -29,7 +29,7 @@ export const getAllNews = async (countToFetch: number, thinkAPI?: any) => {
   return allNews;
 };
 
-export const getSingleItem = async (id: number) => {
+export const getSingleItem = async (id: number): Promise<NewsItemInstance | Error> => {
   try {
     const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
     if (!(typeof response.data === "object")) return new Error();
