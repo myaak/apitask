@@ -73,20 +73,16 @@ const newsItemSlice = createSlice({
 
 export const fetchNewsItemDetails = createAsyncThunk("getNewsItemDetails", async (id: number, thinkAPI) => {
   const response = await getSingleItem(id);
-  if (typeof response === "object" && !(response instanceof Error)) {
-    return response;
-  } else {
-    return thinkAPI.rejectWithValue("Something went wrong");
-  }
+  if (response instanceof Error) return thinkAPI.rejectWithValue("Something went wrong");
+
+  return response;
 });
 
 export const fetchNewsItemComments = createAsyncThunk("getNewsItemComments", async (id: number, thinkAPI) => {
   const response = await getSingleItem(id);
-  if (typeof response === "object" && !(response instanceof Error)) {
-    return response;
-  } else {
-    return thinkAPI.rejectWithValue("Something went wrong");
-  }
+  if (response instanceof Error) return thinkAPI.rejectWithValue("Something went wrong");
+
+  return response;
 });
 
 export default newsItemSlice.reducer;

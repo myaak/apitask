@@ -32,6 +32,8 @@ export const getAllNews = async (countToFetch: number, thinkAPI?: any) => {
 export const getSingleItem = async (id: number) => {
   try {
     const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    if (!(typeof response.data === "object")) return new Error();
+
     return response.data;
   } catch (e) {
     return new Error();
