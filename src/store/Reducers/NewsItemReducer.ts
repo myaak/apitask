@@ -72,14 +72,14 @@ const newsItemSlice = createSlice({
 // Ниже две одинаковые функции но не знаю как лучше назвать/сделать. Что комментарий, что ньюс айтем по одному принципу достаются
 
 export const fetchNewsItemDetails = createAsyncThunk("getNewsItemDetails", async (id: number, thinkAPI) => {
-  const response = await getSingleItem(id);
+  const response: Awaited<ReturnType<typeof getSingleItem>> = await getSingleItem(id);
   if (response instanceof Error) return thinkAPI.rejectWithValue("Something went wrong");
 
   return response;
 });
 
 export const fetchNewsItemComments = createAsyncThunk("getNewsItemComments", async (id: number, thinkAPI) => {
-  const response = await getSingleItem(id);
+  const response: Awaited<ReturnType<typeof getSingleItem>> = await getSingleItem(id);
   if (response instanceof Error) return thinkAPI.rejectWithValue("Something went wrong");
 
   return response;
