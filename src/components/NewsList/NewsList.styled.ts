@@ -30,6 +30,7 @@ export const ReloadButton = styled.button<ITheme>`
   padding: 15px;
   border-radius: 15px;
   font-weight: 700;
+  z-index: 2023;
 
   &:hover {
     cursor: pointer;
