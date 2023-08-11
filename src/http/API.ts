@@ -1,0 +1,41 @@
+import axios from "axios";
+import { INews } from "../types/News.ts";
+import { INewsItem } from "../types/NewsItem.ts";
+
+//get news via redux asyncThunk
+export const getAllNews = async (countToFetch: number, thinkAPI?: any): Promise<INews[]> => {
+  const pageSize = 30;
+  const totalPages = Math.ceil(countToFetch / pageSize);
+
+  const allNews: INews[] = [];
+
+  let fetchedNews = 0; // counter
+
+  for (let page = 1; page <= totalPages; page++) {
+    try {
+      const response = await axios.get<INews[]>(`https://api.hnpwa.com/v0/newest/${page}.json`);
+      const newsOnPage = response.data;
+
+      const remainingNewsToAdd = countToFetch - fetchedNews;
+      const newsToAdd = Math.min(remainingNewsToAdd, newsOnPage.length);
+
+      allNews.push(...newsOnPage.slice(0, newsToAdd));
+      fetchedNews += newsToAdd;
+    } catch (error) {
+      return thinkAPI.rejectWithValue("Something went wrong");
+    }
+  }
+
+  return allNews;
+};
+
+export const getSingleItem = async (id: number): Promise<INewsItem | Error> => {
+  try {
+    const response = await axios.get<INewsItem>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    if (!(typeof response.data === "object")) return new Error();
+
+    return response.data;
+  } catch (e) {
+    return new Error();
+  }
+};
