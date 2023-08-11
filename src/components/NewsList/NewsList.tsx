@@ -1,8 +1,8 @@
 import { NewsListErrorWrapper, NewsListLoaderWrapper, NewsListWrapper, ReloadButton } from "./NewsList.styled.ts";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import NewsListItem from "../NewsListItem/NewsListItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
-import { NewsInstance } from "../../types/News.ts";
+import { INews } from "../../types/News.ts";
 import Loader from "../Loader/Loader.tsx";
 import { fetchNews } from "../../store/Reducers/NewsReducer.ts";
 import FetchAlertWindow from "../PopUps/FetchAlertWindow/FetchAlertWindow.tsx";
@@ -15,19 +15,7 @@ export const NewsList = () => {
 
   const dispatch = useAppDispatch();
 
-  const newsItems = news.map((item: NewsInstance) => (
-    <NewsListItem
-      key={item.id}
-      title={item.title}
-      user={item.user}
-      comments_count={item.comments_count}
-      points={item.points}
-      time={item.time}
-      url={item.url}
-      id={item.id}
-      domain={item.domain}
-    />
-  ));
+  const newsItems = useMemo(() => news.map((item: INews) => <NewsListItem key={item.id} NewsItem={item} />), [news]);
 
   const fetchNewNews = useCallback(async () => {
     dispatch(fetchNews());

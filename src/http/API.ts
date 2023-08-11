@@ -1,19 +1,19 @@
 import axios from "axios";
-import { NewsInstance } from "../types/News.ts";
-import { NewsItemInstance } from "../types/NewsItem.ts";
+import { INews } from "../types/News.ts";
+import { INewsItem } from "../types/NewsItem.ts";
 
 //get news via redux asyncThunk
-export const getAllNews = async (countToFetch: number, thinkAPI?: any): Promise<NewsInstance[]> => {
+export const getAllNews = async (countToFetch: number, thinkAPI?: any): Promise<INews[]> => {
   const pageSize = 30;
   const totalPages = Math.ceil(countToFetch / pageSize);
 
-  const allNews: NewsInstance[] = [];
+  const allNews: INews[] = [];
 
   let fetchedNews = 0; // counter
 
   for (let page = 1; page <= totalPages; page++) {
     try {
-      const response = await axios.get<NewsInstance[]>(`https://api.hnpwa.com/v0/newest/${page}.json`);
+      const response = await axios.get<INews[]>(`https://api.hnpwa.com/v0/newest/${page}.json`);
       const newsOnPage = response.data;
 
       const remainingNewsToAdd = countToFetch - fetchedNews;
@@ -29,9 +29,9 @@ export const getAllNews = async (countToFetch: number, thinkAPI?: any): Promise<
   return allNews;
 };
 
-export const getSingleItem = async (id: number): Promise<NewsItemInstance | Error> => {
+export const getSingleItem = async (id: number): Promise<INewsItem | Error> => {
   try {
-    const response = await axios.get<NewsItemInstance>(`https://api.hnpwa.com/v0/item/${id}.json`);
+    const response = await axios.get<INewsItem>(`https://api.hnpwa.com/v0/item/${id}.json`);
     if (!(typeof response.data === "object")) return new Error();
 
     return response.data;

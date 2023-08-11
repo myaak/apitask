@@ -14,7 +14,7 @@ import {
 import { getCorrectDate } from "../../utils/getCorrectDate.ts";
 import CommentList from "../CommentList/CommentList.tsx";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CommentItemTextarea from "../CommentItem/CommentItemTextarea.tsx";
 import DOMPurify from "dompurify";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
@@ -29,7 +29,7 @@ const NewsDetailedItem = () => {
 
   const [isCommenting, setCommenting] = useState<boolean>(false);
 
-  const safeContent = DOMPurify.sanitize(content);
+  const safeContent = useMemo(() => DOMPurify.sanitize(content), [content]);
 
   const { topicId } = useParams();
 

@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewsInstance } from "../../types/News.ts";
+import { INews } from "../../types/News.ts";
 import { getAllNews } from "../../http/API.ts";
 
-interface IInitialState {
-  news: NewsInstance[];
+interface IState {
+  news: INews[];
   isFetched: boolean;
   isLoading: boolean;
   error: string;
 }
 
-const initialState: IInitialState = {
+const initialState: IState = {
   news: [],
   isFetched: false,
   isLoading: false,
@@ -21,7 +21,7 @@ const newsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchNews.fulfilled.type, (state, action: PayloadAction<NewsInstance[]>) => {
+    builder.addCase(fetchNews.fulfilled.type, (state, action: PayloadAction<INews[]>) => {
       state.news = action.payload;
       state.isFetched = true;
       state.isLoading = false;

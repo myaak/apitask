@@ -9,10 +9,15 @@ import {
   NewsItemTitle,
   NewsItemWrapper
 } from "./NewsListItem.styled.ts";
-import { NewsInstance } from "../../types/News.ts";
+import { INews } from "../../types/News.ts";
 import { getCorrectTime } from "../../utils/getCorrectTime.ts";
 
-const NewsListItem: React.FC<NewsInstance> = ({ id, title, user, comments_count, points, time }) => {
+interface NewsListItemProps {
+  NewsItem: INews;
+}
+
+const NewsListItem: React.FC<NewsListItemProps> = ({ NewsItem }) => {
+  const { id, title, user, comments_count, points, time } = NewsItem;
   return (
     <NewsItemWrapper>
       <NewsItemLink to={`${id}`}>
@@ -21,7 +26,7 @@ const NewsListItem: React.FC<NewsInstance> = ({ id, title, user, comments_count,
       <NewsItemInfo>
         <NewsItemAuthorWrapper>
           Published by:
-          <NewsItemAuthor> {user}</NewsItemAuthor>
+          <NewsItemAuthor>{user}</NewsItemAuthor>
         </NewsItemAuthorWrapper>
         <NewsItemComments>Comments: {comments_count}</NewsItemComments>
         <NewsItemRating>Points: {points}</NewsItemRating>

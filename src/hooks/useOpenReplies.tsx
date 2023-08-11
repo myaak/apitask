@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { NewsItemInstance } from "../types/NewsItem.ts";
+import { INewsItem } from "../types/NewsItem.ts";
 import { getSingleItem } from "../http/API.ts";
 
 const useOpenReplies = (id: number) => {
-  const [children, setChildren] = useState<NewsItemInstance[]>();
+  const [children, setChildren] = useState<INewsItem[]>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [openedReplies, setOpenedReplies] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

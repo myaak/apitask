@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { ITheme } from "../../theme/theme.ts";
 
-export const HeaderWrapper = styled.header`
+export const HeaderWrapper = styled.header<ITheme>`
+  display: flex;
+  justify-content: center;
   background-color: #333333;
   padding: 20px;
   text-align: center;
@@ -8,12 +11,14 @@ export const HeaderWrapper = styled.header`
   margin-bottom: 20px;
   position: sticky;
   top: 0;
-  z-index: 2023;
+  z-index: ${(props) => props.theme.maxZIndex};
 `;
 
-export const HeaderTitle = styled.h1`
+export const HeaderTitle = styled.div`
+  width: max-content;
   color: #ffffff;
   font-size: 24px;
+  font-weight: 700;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 2px;

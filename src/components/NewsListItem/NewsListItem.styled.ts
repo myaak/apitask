@@ -38,6 +38,8 @@ export const NewsItemTitle = styled.h2<ITheme>`
 `;
 
 export const NewsItemAuthor = styled.span`
+  margin-left: 10px;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;

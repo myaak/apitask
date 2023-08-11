@@ -8,9 +8,9 @@ import {
   CommentItemReply,
   CommentItemWrapper
 } from "./CommentItem.styled.ts";
-import { NewsItemInstance } from "../../types/NewsItem.ts";
+import { INewsItem } from "../../types/NewsItem.ts";
 import DOMPurify from "dompurify";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Loader from "../Loader/Loader.tsx";
 import CommentItemTextarea from "./CommentItemTextarea.tsx";
 import { getCorrectTime } from "../../utils/getCorrectTime.ts";
@@ -18,7 +18,7 @@ import useOpenReplies from "../../hooks/useOpenReplies.tsx";
 import { useAppSelector } from "../../hooks/reduxHooks.ts";
 
 interface CommentItemProps {
-  comment: NewsItemInstance;
+  comment: INewsItem;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
@@ -29,7 +29,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
 
   const { openedReplies, isLoading, handleOpenReplies, children, error } = useOpenReplies(id);
 
-  const safeContent = DOMPurify.sanitize(content); //API вернет HTML string, так что нужно проверить чтобы все безопасно было
+  const safeContent = useMemo(() => DOMPurify.sanitize(content), [content]); //API вернет HTML string, так что нужно проверить чтобы все безопасно было
 
   const handleClickReply = () => {
     setReplying(true);
@@ -57,9 +57,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
           {isLoading && <Loader />}
         </CommentItemMainInfo>
         {error && <CommentItemWrapper>Something went wrong</CommentItemWrapper>}
-        {children &&
-          openedReplies &&
-          children.map((item: NewsItemInstance) => <CommentItem key={item.id} comment={item} />)}
+        {children && openedReplies && children.map((item: INewsItem) => <CommentItem key={item.id} comment={item} />)}
       </CommentItemWrapper>
     )
   );

@@ -11,7 +11,6 @@ export const NewsListWrapper = styled.ul`
 `;
 
 export const NewsListLoaderWrapper = styled(NewsListWrapper)`
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
@@ -25,12 +24,12 @@ export const ReloadButton = styled.button<ITheme>`
   position: fixed;
   right: 2rem;
   bottom: 2rem;
-  background-color: ${(props) => props.theme.titleColor};
+  background-color: ${(props) => props.theme.mainBgColor};
   color: #fff;
   padding: 15px;
   border-radius: 15px;
   font-weight: 700;
-  z-index: 2023;
+  z-index: ${(props) => props.theme.maxZIndex};
 
   &:hover {
     cursor: pointer;

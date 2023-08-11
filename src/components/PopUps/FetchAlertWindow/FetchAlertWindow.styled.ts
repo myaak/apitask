@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { ITheme } from "../../../theme/theme.ts";
 
-export const FetchAlertWindowStyled = styled.div`
+export const FetchAlertWindowStyled = styled.div<ITheme>`
   position: fixed;
   left: 50%;
   bottom: 0.5rem;
   transform: translateX(-50%);
   background-color: #ddd;
   color: #222;
-  z-index: 2023;
+  z-index: ${(props) => props.theme.maxZIndex};
   max-width: 400px;
   border-radius: 8px;
   font-size: 16px;

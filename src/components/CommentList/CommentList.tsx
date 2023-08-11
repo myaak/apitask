@@ -1,9 +1,9 @@
 import { CommentListTitle, CommentListWrapper } from "./CommentList.styled.ts";
-import { NewsItemInstance } from "../../types/NewsItem.ts";
+import { INewsItem } from "../../types/NewsItem.ts";
 import CommentItem from "../CommentItem/CommentItem.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks.ts";
 import FetchAlertWindow from "../PopUps/FetchAlertWindow/FetchAlertWindow.tsx";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { fetchNewsItemComments } from "../../store/Reducers/NewsItemReducer.ts";
 import { NewsDetailedItemCommentsReloadButton } from "../NewsDetailedItem/NewsDetailedItem.styled.ts";
 import SuccessfulUpdate from "../PopUps/SuccessfulUpdateWindow/SuccessfulUpdate.tsx";
@@ -16,7 +16,10 @@ const CommentList = () => {
 
   const dispatch = useAppDispatch();
 
-  const commentsList = comments.map((item: NewsItemInstance) => <CommentItem key={item.id} comment={item} />);
+  const commentsList = useMemo(
+    () => comments.map((item: INewsItem) => <CommentItem key={item.id} comment={item} />),
+    [comments]
+  );
 
   const fetchNewComments = useCallback(async () => {
     dispatch(fetchNewsItemComments(id));

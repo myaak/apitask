@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <HeaderTitle onClick={handleRedirectToMain}>HACKER NEWS</HeaderTitle>
+      <HeaderTitle onClick={handleRedirectToMain}>Hacker news</HeaderTitle>
     </HeaderWrapper>
   );
 };

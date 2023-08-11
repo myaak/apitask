@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewsItemInstance } from "../../types/NewsItem.ts";
+import { INewsItem } from "../../types/NewsItem.ts";
 import { getSingleItem } from "../../http/API.ts";
 
-interface IInitialState {
-  newsDetailsItem: NewsItemInstance;
+interface IState {
+  newsDetailsItem: INewsItem;
   isFetched: boolean;
   isLoading: boolean;
   isCommentsLoading: boolean;
   error: string;
 }
 
-const initialState: IInitialState = {
+const initialState: IState = {
   newsDetailsItem: {
     id: 0,
     title: "",
@@ -38,7 +38,7 @@ const newsItemSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchNewsItemDetails.fulfilled.type, (state, action: PayloadAction<NewsItemInstance>) => {
+    builder.addCase(fetchNewsItemDetails.fulfilled.type, (state, action: PayloadAction<INewsItem>) => {
       state.newsDetailsItem = action.payload;
       state.isLoading = false;
       state.isFetched = true;
@@ -53,7 +53,7 @@ const newsItemSlice = createSlice({
       state.error = action.payload;
     });
     //fetch comments
-    builder.addCase(fetchNewsItemComments.fulfilled.type, (state, action: PayloadAction<NewsItemInstance>) => {
+    builder.addCase(fetchNewsItemComments.fulfilled.type, (state, action: PayloadAction<INewsItem>) => {
       state.newsDetailsItem.comments = action.payload.comments;
       state.newsDetailsItem.comments_count = action.payload.comments_count;
       state.isCommentsLoading = false;
